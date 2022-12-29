@@ -1,0 +1,27 @@
+package com.mobileautomation;
+import java.net.URL;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.Test;
+
+import io.appium.java_client.android.AndroidDriver;
+public class CaptureScreenshotonBrowser {
+	
+	public AndroidDriver<WebElement> driver;
+	@Test
+	public void CaptureScreenshotBrowser()
+	{
+		DesiredCapabilities caps = new DesiredCapabilities();
+		caps.setCapability(CapabilityType.BROWSER_NAME,"chrome");
+		 caps.setCapability("platformVersion", "9.0");
+        caps.setCapability("platformName", "Android");
+        caps.setCapability("deviceName", "emulator-5554");
+        
+       
+       driver = new AndroidDriver<WebElement>(new URL("http://localhost:4723/wd/hub"),caps);
+	}
+	
+
+}

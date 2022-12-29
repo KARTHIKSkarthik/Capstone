@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2022-12-12T01:05:27 IST" name="Default suite" finished-at="2022-12-12T01:05:52 IST" duration-ms="24524">
+    <groups>
+    </groups>
+    <test started-at="2022-12-12T01:05:27 IST" name="Default test" finished-at="2022-12-12T01:05:52 IST" duration-ms="24524">
+      <class name="com.test.AppiumAppAutomate">
+        <test-method signature="AppAutomate()[pri:0, instance:com.test.AppiumAppAutomate@5bd03f44]" started-at="2022-12-12T01:05:27 IST" name="AppAutomate" finished-at="2022-12-12T01:05:52 IST" duration-ms="24494" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- AppAutomate -->
+      </class> <!-- com.test.AppiumAppAutomate -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

@@ -1,0 +1,66 @@
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
+public class TestSwiggy {
+	public static AndroidDriver<AndroidElement> driver;
+	@BeforeMethod
+	public void OpenApp() throws MalformedURLException
+	{
+		DesiredCapabilities 
+		caps = new DesiredCapabilities();
+		//Provide  Device Name
+		
+		caps.setCapability("deviceName", "emulator-5554");
+		caps.setCapability("platformName", "Android");
+		caps.setCapability("platformVersion", "9.0");
+	    caps.setCapability("noReset", "true");
+	//Usually the app package name and app activity will be provided by the devlopers
+	    
+	    caps.setCapability("appPackage","io.appium.android.apis");
+	    caps.setCapability("appActivity","io.appium.android.apis.ApiDemos");
+	    driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"),caps);
+	}
+	
+	@Test
+	
+	public void Testcase() throws InterruptedException
+	{
+		System.out.println("Start Test");
+		Thread.sleep(2000);
+		driver.findElementByAccessibilityId("Graphics").click();
+		//To pass an Android key event for perform any device specific action
+		driver.pressKey(new KeyEvent().withKey(AndroidKey.BACK));
+        
+        //To perform action on an android element using xpath
+        
+        driver.findElement(By.xpath("//android.widget.TextView[@content-desc=\"Media\"]")).click();
+        
+        driver.pressKey(new KeyEvent().withKey(AndroidKey.BACK));
+        
+        //Identifying element using AndroidUIAutomator
+        driver.findElementByAndroidUIAutomator("text(\"OS\")").click();
+        driver.findElementByAccessibilityId("SMS Messaging").click();
+        
+        AndroidElement smsMessage = driver.findElementById("io.appium.android.apis:id/sms_recipient");
+        
+        smsMessage.sendKeys("Karthik");
+      Thread.sleep(4000);
+      driver.pressKey(new KeyEvent(AndroidKey.SPACE));
+      driver.pressKey(new KeyEvent(AndroidKey.P));
+
+
+
+	        
+	}
+	}
+
+

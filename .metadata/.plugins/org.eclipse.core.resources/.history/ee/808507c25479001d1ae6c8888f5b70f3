@@ -1,0 +1,39 @@
+package com.test;
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.Test;
+public class AppiumCloudBrowserTest {
+    
+	public static RemoteWebDriver driver;
+    public static final String username="harishafcutest1";
+    public static final String key ="WRzL8XCDjyEcE6cPvTbz";
+    public static final String url ="https://" +username+":"+key+"@hub-cloud.browserstack.com/wd/hub";
+    
+    
+    
+    
+    @Test
+    
+    public void MobileCloudTest() throws MalformedURLException {
+        
+        DesiredCapabilities caps = new DesiredCapabilities();
+        
+        caps.setCapability("os_version", "16");
+        caps.setCapability("deviceName", "iPhone 14");
+        caps.setCapability("browser", "safari");
+        
+        // We have to define the name for our Automation test
+        
+        caps.setCapability("name", "iOS Safari Test");
+        
+        driver = new RemoteWebDriver(new URL(url), caps);
+        
+        driver.get("http://www.google.com");
+      
+        
+        
+        
+}
+}

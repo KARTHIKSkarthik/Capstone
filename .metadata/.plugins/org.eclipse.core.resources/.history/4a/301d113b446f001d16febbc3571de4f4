@@ -1,0 +1,117 @@
+package com.failscreenshotexample;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
+
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
+
+public class ElementVerification {
+	
+	public static AndroidDriver<AndroidElement> driver;	
+	public  ExtentSparkReporter spark;
+	public  ExtentReports extent;
+	public ExtentTest logger;
+	public DateFormat dateformat;
+	@Test
+	public void ElementVerificationExample() throws InterruptedException, IOException
+	{
+		   
+		//Step 1 we have to create q object for extent test w.r.t extentreports
+		 extent = new ExtentReports();
+		 spark = new ExtentSparkReporter("./TestReport/AutomationReport.html");
+		 spark.config().setTheme(Theme.STANDARD);
+		 extent.attachReporter(spark);
+		 //provide the name for the testcase
+		 logger = extent.createTest("ElementVerificationExample");
+		 
+		
+		DesiredCapabilities caps = new DesiredCapabilities();
+	        
+	        //Details given as part of your device
+	        caps.setCapability("deviceName", "emulator-5554");
+	        caps.setCapability("platformName", "Android");
+	        
+	        caps.setCapability("platformVersion", "9.0");
+	        caps.setCapability("noReset", "true");
+	        
+	        //Provide the details for launching the app in the emulator, for launching the app
+	        //We have to provide "Package name" and "activty name"
+	        
+	        caps.setCapability("appPackage", "io.appium.android.apis");
+	        caps.setCapability("appActivity", "io.appium.android.apis.ApiDemos");
+	        
+	        driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"),caps);
+	        logger.pass("API Demo's App  Opening Sucessfully");
+	        Thread.sleep(2000);	        
+	        try {
+	            Boolean AccessibilityElement = driver.findElementByAccessibilityId("Accessibility1").isDisplayed();
+	            
+	            System.out.println(AccessibilityElement);
+	            
+	            //Assert.assertTrue(AccessibilityElement, "The Element is displayed on the screen");
+	            
+	            String status = AccessibilityElement.toString();
+	            
+	            if(status.equalsIgnoreCase("True"))
+	            {            
+	            logger.pass("The Element is displayed on the screen");
+	            }
+	            
+	            }
+	            
+	            catch(Exception e)
+	            {
+	                    logger.fail("Element is not displayed on the page, or incorrect locator");
+	                    logger.info(e);
+	                    String destDir = "./Screenshot/FailedScreenshots";
+	                
+	                    //Define the code for capturing the screenshot
+	                    
+	                    File srcFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+	                    
+	                    //Setting file name for the screenshot
+	                    
+	                    
+	                    dateformat = new SimpleDateFormat("dd-MMM-YYYY__hh_mm_ssaa");
+	                    
+	                    new File(destDir).mkdirs();
+	                    
+	                    
+	                    
+	                    
+	                    String destFile = dateformat.format(new Date(0))+".png";
+                         FileUtils.copyFile(srcFile, new File(destDir +"/"+destFile));
+                         String location ="./FailedScreenshots/"+destFile;
+                         logger.fail(MediaEntityBuilder.createScreenCaptureFromPath(location).build());
+
+
+
+	            }
+
+
+           extent.flush();
+
+
+}
+	
+	
+}

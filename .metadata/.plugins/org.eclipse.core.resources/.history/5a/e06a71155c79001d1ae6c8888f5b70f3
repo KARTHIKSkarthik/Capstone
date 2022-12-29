@@ -1,0 +1,36 @@
+package com.test;
+
+import java.net.URL;
+
+public class AppiumAppAutomate {
+	
+@Test
+    
+    public void AppAutomate() throws MalformedURLException
+    {
+        
+        DesiredCapabilities caps = new DesiredCapabilities();
+        
+        // Set your access credentials
+        caps.setCapability("browserstack.user", "harishafcutest1");
+        caps.setCapability("browserstack.key", "WRzL8XCDjyEcE6cPvTbz");
+        
+        // Set URL of the application under test
+        caps.setCapability("app", "bs://4872b86175dec673b39ce3c9583448880a9cfebf");
+        
+        // Specify device and os_version for testing
+        caps.setCapability("device", "Google Pixel 3");
+        caps.setCapability("os_version", "9.0");
+        
+        // Set other BrowserStack capabilities
+        caps.setCapability("project", "API Demo Test App");
+        
+        
+        AndroidDriver<AndroidElement>driver = new AndroidDriver(new URL("http://hub.browserstack.com/wd/hub"), caps);
+        
+        
+    }
+
+
+
+}

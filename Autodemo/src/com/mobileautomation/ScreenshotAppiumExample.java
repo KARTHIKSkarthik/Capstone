@@ -1,0 +1,91 @@
+package com.mobileautomation;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import io.appium.java_client.android.AndroidDriver;
+
+public class ScreenshotAppiumExample {
+	
+	
+	public static AndroidDriver driver;
+	public String destDir;
+	public DateFormat dateFormat;
+
+	@BeforeTest
+	public void ScreenshotAppiumExample() throws MalformedURLException, InterruptedException
+	{
+		 DesiredCapabilities caps = new DesiredCapabilities();
+	        
+	        //Details given as part of your device
+	        caps.setCapability("deviceName", "emulator-5554");
+	        caps.setCapability("platformName", "Android");
+	        
+	        caps.setCapability("platformVersion", "9.0");
+	        caps.setCapability("noReset", "true");
+	        
+	        //Provide the details for launching the app in the emulator, for launching the app
+	        //We have to provide "Package name" and "activty name"
+	        
+	        caps.setCapability("appPackage", "io.appium.android.apis");
+	        caps.setCapability("appActivity", "io.appium.android.apis.ApiDemos");
+	        
+	        driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"),caps);
+	        Thread.sleep(2000);
+	        takeScreenshotFromMobile();
+
+}
+	public void takeScreenshotFromMobile()
+	{
+	           //Define the folder to save the screenshot
+		destDir= "./Screenshot";
+		
+		//Define the code for capturing the screenshot
+		File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		//Setting file name for the screenshot
+		dateFormat = new SimpleDateFormat("dd-MM-YYYY_hh_mm_ssaa");
+		new File(destDir).mkdirs();
+		String destFile = dateFormat.format(new Date(0))+".png";
+		try
+		{
+			FileUtils.copyFile(srcFile, new File(destDir +"/" +destFile));
+		}
+		
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void StartTest()
+	{
+	System.out.println("Test case started");
+}
+}

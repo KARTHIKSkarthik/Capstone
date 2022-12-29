@@ -1,0 +1,80 @@
+package com.mobileautomation;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.CapabilityType;
+import org.testng.annotations.Test;
+
+import io.appium.java_client.android.AndroidDriver;
+public class CaptureScreenshotonBrowser {
+	
+	public AndroidDriver<WebElement> driver;
+	
+	public String destDir;
+	public DateFormat dateFormat;
+	@Test
+	public void CaptureScreenshotBrowser() throws MalformedURLException, InterruptedException
+	{
+		DesiredCapabilities caps = new DesiredCapabilities();
+		caps.setCapability(CapabilityType.BROWSER_NAME,"chrome");
+		 caps.setCapability("platformVersion", "9.0");
+        caps.setCapability("platformName", "Android");
+        caps.setCapability("deviceName", "emulator-5554");
+        
+       
+       driver = new AndroidDriver<WebElement>(new URL("http://localhost:4723/wd/hub"),caps);
+       driver.get("http://automationpractice.com/index.php");
+       
+       driver.navigate().refresh();
+       
+       Thread.sleep(3000);
+       
+       WebElement SearchBox = driver.findElement(By.id("search_query_top"));
+       
+       SearchBox.sendKeys("Shirts");
+       
+       WebElement SearchIcon = driver.findElement(By.name("submit_search"));
+       
+       SearchIcon.click();
+       takeScreenshotFromMobile();
+       
+       
+   }
+	public void takeScreenshotFromMobile()
+	{
+	           //Define the folder to save the screenshot
+		destDir= "./Screenshot_Web";
+		
+		//Define the code for capturing the screenshot
+		File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		//Setting file name for the screenshot
+		dateFormat = new SimpleDateFormat("dd-MM-YYYY_hh_mm_ssaa");
+		new File(destDir).mkdirs();
+		String destFile = dateFormat.format(new Date(0))+".png";
+		try
+		{
+			FileUtils.copyFile(srcFile, new File(destDir +"/" +destFile));
+		}
+		
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+
+       
+	}
+	
+
+

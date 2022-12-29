@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite"  parallel="tests">
+  <test thread-count="5" name="Pixel 6">
+    <parameter name="port" value="4724"></parameter>
+    <parameter name="deviceID" value="emulator-5554"></parameter>
+    <classes>
+      <class name="com.gridexample.StartBrowserGridExample"/>
+    </classes>
+  </test> 
+  <!-- Test -->
+  
+   <test thread-count="5" name="Pixel XL">
+    <parameter name="port" value="4725"></parameter>
+    <parameter name="deviceID" value="emulator-5556"></parameter>
+    <classes>
+      <class name="com.gridexample.StartBrowserGridExample"/>
+    </classes>
+  </test> 
+  
+  
+</suite> <!-- Suite-->
+
